@@ -1,0 +1,6 @@
+<Files ~ "^(\.|composer\.json)">
+order allow,deny
+deny from all
+</Files>
+
+RedirectMatch 404 /\.git
