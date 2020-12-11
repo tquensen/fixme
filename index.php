@@ -37,7 +37,7 @@ echo('    <!-- Navigation -->
         <!-- /.container -->
     </nav>');
 
-if (isset($_GET['site']) && $_GET['site'] != "") {
+if (isset($_GET['site']) && $_GET['site'] != "" && preg_match('/^[a-z]+\.php$/', $_GET['site']) && file_exists(__DIR__.'/'.$_GET['site'])) {
     include $_GET['site'];
 } else {
     $description = nl2br(file_get_contents("README.md"));

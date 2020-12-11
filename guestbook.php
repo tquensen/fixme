@@ -14,12 +14,12 @@ global $db;
 if(isset($_POST['entry']) && $_POST['entry'] != "") {
     $id = $_SESSION['userid'];
     $entry = $_POST['entry'];
-    $query = "select * from `users` where `id` = '$id' LIMIT 1";
+    $query = "select * from `users` where `id` = '{$db->real_escape_string($id)}' LIMIT 1";
     $result = $db->query($query);
     if ($row = $result->fetch_assoc()) {
         $username = $row['username'];
     }
-    $query = "INSERT INTO `guestbook` (`username`, `entry`) VALUES ('$username', '$entry');";
+    $query = "INSERT INTO `guestbook` (`username`, `entry`) VALUES ('{$db->real_escape_string($username)}', '{$db->real_escape_string($entry)}');";
     $result = $db->query($query);
     $db->commit();
     print('<div class="row">
@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $username = $row['username'];
         $entry = $row['entry'];
-        print('<tr><td>' . $username . '</td><td>' . $entry . '</td></tr>');
+        print('<tr><td>' . htmlspecialchars($username) . '</td><td>' . htmlspecialchars($entry) . '</td></tr>');
     }
     print('</tbody></table>');
 } else {
